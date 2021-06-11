@@ -2,22 +2,25 @@ import fetch from 'node-fetch';
 
 import {
   ClientOptions,
+  Mailjet,
   Message,
-  MessageResponse,
   PayloadResponse,
 } from './types';
 
-export async function createClient(options: ClientOptions) {
+export * from './types'
+
+export function createClient(options: ClientOptions): Mailjet {
   const { publicKey, privateKey, version = '3.1' } = options;
 
   const endpoint = `https://api.mailjet.com/${version}/send`;
+
   const authorization = Buffer.from(
     `${publicKey.trim()}:${privateKey.trim()}`
   ).toString('base64');
 
   const send = async (
     messages: Message | Message[]
-  ): Promise<MessageResponse | MessageResponse[]> => {
+  ) => {
     const payload = Array.isArray(messages) ? messages : [messages];
 
     const response = await fetch(endpoint, {
@@ -36,8 +39,7 @@ export async function createClient(options: ClientOptions) {
       );
 
     const { Messages }: PayloadResponse = await response.json();
-    if (Array.isArray(messages)) return Messages;
-    return Messages[0];
+    return Messages
   };
 
   return { send };

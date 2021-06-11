@@ -62,3 +62,7 @@ export interface MessageResponse {
 export interface PayloadResponse {
   Messages: MessageResponse[];
 }
+
+export interface Mailjet {
+  send(messages: Message | Message[]): Promise<MessageResponse[]>
+}
