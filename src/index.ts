@@ -8,10 +8,10 @@ export function createClient(options: ClientOptions): Mailjet {
   const { publicKey, privateKey, version = '3.1' } = options;
 
   const endpoint = `https://api.mailjet.com/v${version}/send`;
-
   const authorization = Buffer.from(
     `${publicKey.trim()}:${privateKey.trim()}`
   ).toString('base64');
+
   const send = async (messages: Message | Message[]) => {
     const payload = Array.isArray(messages) ? messages : [messages];
 
