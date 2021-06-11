@@ -64,5 +64,5 @@ export interface PayloadResponse {
 }
 
 export interface Mailjet {
-  send(messages: Message | Message[]): Promise<MessageResponse[]>
+  send(messages: Message | Message[]): Promise<MessageResponse[]>;
 }
